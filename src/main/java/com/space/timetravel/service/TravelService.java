@@ -28,8 +28,26 @@ public class TravelService {
 
 	@Transactional
 	public TravelDTO save(TravelDTO travelDTO) {
+		validatePersonalGalacticIdentifier( travelDTO );
+		validateExistingTravel( travelDTO );
 		Travel travel = repository.save( mapper.toEntity( travelDTO ) );
 		return mapper.toDTO( travel );
+	}
+
+	private void validatePersonalGalacticIdentifier(TravelDTO travel) {
+		Optional.ofNullable( travel )
+				.map( TravelDTO::getPersonalGalacticIdentifier )
+				.filter( pgi -> pgi.length() >= 5 && pgi.length() <= 10 )
+				.map( pgi -> pgi.charAt( 0 ) )
+				.filter( Character::isAlphabetic )
+				.orElseThrow( () -> new InvalidPGIException() );
+	}
+
+	private void validateExistingTravel(TravelDTO travel) {
+		Optional<Travel> existingTravel = repository.findByPersonalGalacticIdentifierAndPlaceAndDate(
+				travel.getPersonalGalacticIdentifier(), travel.getPlace(), travel.getDate() );
+		if (existingTravel.isPresent())
+			throw new TravelAlreadyExistsException();
 	}
 
 	public List<TravelDTO> getAll() {
