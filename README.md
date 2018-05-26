@@ -1,5 +1,7 @@
 # time-travel
 
+[![Build Status](https://travis-ci.org/robertoduessmann/time-travel.svg?branch=master)](https://travis-ci.org/robertoduessmann/time-travel)
+
 > Space-time travel machine
 
 ## Installation
@@ -24,7 +26,7 @@ $ java -jar target/time-travel-0.0.1-SNAPSHOT.jar
 > Submit travel details
 ```console
 $ curl -X POST \
-    http://localhost:8080/travels \
+    https://spacetimetravel.herokuapp.com/travels \
     -H 'content-type: application/json' \
     -d '{
     "personalGalacticIdentifier": "person1",
@@ -36,7 +38,7 @@ $ curl -X POST \
 ### GET /travel/{id}
 > Get details from a travel
 ```console
-$ curl -X GET http://localhost:8080/travels/618f8104-ce84-40ee-b703-3a716b078584
+$ curl -X GET https://spacetimetravel.herokuapp.com/travels/618f8104-ce84-40ee-b703-3a716b078584
 ```
 ```json
 {
@@ -50,15 +52,15 @@ $ curl -X GET http://localhost:8080/travels/618f8104-ce84-40ee-b703-3a716b078584
 ### GET /travels
 > Get all travels
 ```console
-$ curl -X GET http://localhost:8080/travels
+$ curl -X GET https://spacetimetravel.herokuapp.com/travels
 ```
 ```json
 [
-	{
-		"id": "618f8104-ce84-40ee-b703-3a716b078584",
-		"personalGalacticIdentifier": "person1",
-		"place": "London",
-		"date": "2018-05-24T20:31:26.481Z"
-	}
+   {
+      "id": "618f8104-ce84-40ee-b703-3a716b078584",
+      "personalGalacticIdentifier": "person1",
+      "place": "London",
+      "date": "2018-05-24T20:31:26.481Z"
+   }
 ]
 ```
