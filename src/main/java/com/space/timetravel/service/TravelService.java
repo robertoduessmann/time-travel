@@ -21,6 +21,9 @@ import com.space.timetravel.repository.TravelRepository;
 @Service
 public class TravelService {
 
+	private static final int MINIMUM_PDI_LENGTH = 5;
+	private static final int MAXIMUM_PDI_LENGTH = 10;
+
 	@Autowired
 	private TravelRepository repository;
 	@Autowired
@@ -52,7 +55,7 @@ public class TravelService {
 	private void validatePersonalGalacticIdentifier(TravelDTO travel) {
 		Optional.ofNullable( travel )
 				.map( TravelDTO::getPersonalGalacticIdentifier )
-				.filter( pgi -> pgi.length() >= 5 && pgi.length() <= 10 )
+				.filter( pgi -> pgi.length() >= MINIMUM_PDI_LENGTH && pgi.length() <= MAXIMUM_PDI_LENGTH )
 				.map( pgi -> pgi.charAt( 0 ) )
 				.filter( Character::isAlphabetic )
 				.orElseThrow( () -> new InvalidPGIException() );
