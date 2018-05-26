@@ -3,6 +3,8 @@ package com.space.timetravel.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,16 @@ public class TravelController {
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity save(@RequestBody TravelDTO travel) {
 		return ResponseEntity.ok( service.save( travel ) );
+	}
+
+	@GetMapping(value = "{travelId}")
+	public ResponseEntity get(@PathVariable String travelId) {
+		return ResponseEntity.ok( service.get( travelId ) );
+	}
+
+	@GetMapping
+	public ResponseEntity getAll() {
+		return ResponseEntity.ok( service.getAll() );
 	}
 
 }
