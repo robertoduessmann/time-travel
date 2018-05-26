@@ -34,6 +34,21 @@ public class TravelService {
 		return mapper.toDTO( travel );
 	}
 
+	public TravelDTO get(String travelId) {
+		UUID id = UUID.fromString( travelId );
+		return repository.findById( id )
+				.map( mapper::toDTO )
+				.orElse( null );
+	}
+
+	public List<TravelDTO> getAll() {
+		ArrayList<Travel> travels = new ArrayList<>();
+		repository.findAll().forEach( travels::add );
+		return travels.stream()
+				.map( mapper::toDTO )
+				.collect( Collectors.toList() );
+	}
+
 	private void validatePersonalGalacticIdentifier(TravelDTO travel) {
 		Optional.ofNullable( travel )
 				.map( TravelDTO::getPersonalGalacticIdentifier )
@@ -48,20 +63,5 @@ public class TravelService {
 				travel.getPersonalGalacticIdentifier(), travel.getPlace(), travel.getDate() );
 		if (existingTravel.isPresent())
 			throw new TravelAlreadyExistsException();
-	}
-
-	public List<TravelDTO> getAll() {
-		ArrayList<Travel> travels = new ArrayList<>();
-		repository.findAll().forEach( travels::add );
-		return travels.stream()
-				.map( mapper::toDTO )
-				.collect( Collectors.toList() );
-	}
-
-	public TravelDTO get(String travelId) {
-		UUID id = UUID.fromString( travelId );
-		return repository.findById( id )
-				.map( mapper::toDTO )
-				.orElse( null );
 	}
 }
