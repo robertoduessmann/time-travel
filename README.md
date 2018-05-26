@@ -4,21 +4,30 @@
 
 > Space-time travel machine
 
-## Installation
+## Running
 
-### Option 1: Running
+### Option 1: Running using maven plugin
 ```console
 $ cd <project>
 $ mvn spring-boot:run
 ```
 
-### Option 2: Build and Running
+### Option 2: Running as a packaged application
 ```console
 $ cd <project>
 $ mvn clean install
 $ java -jar target/time-travel-0.0.1-SNAPSHOT.jar
 ```
 
+### Option 3: Running on Docker
+Build image from a Dockerfile:
+```console
+$ docker build -t time-travel:latest .
+```
+Run docker image:
+```console
+$ docker run -p 8080:8080 time-travel:latest
+```
 
 ## Usage
 
@@ -29,10 +38,10 @@ $ curl -X POST \
     https://spacetimetravel.herokuapp.com/travels \
     -H 'content-type: application/json' \
     -d '{
-    "personalGalacticIdentifier": "person1",
-    "place": "London",
-    "date": "2018-05-24T20:31:26.481Z"
-  }'
+        "personalGalacticIdentifier": "person1",
+        "place": "London",
+        "date": "2018-05-24T20:31:26.481Z"
+    }'
 ```
 
 ### GET /travel/{id}
